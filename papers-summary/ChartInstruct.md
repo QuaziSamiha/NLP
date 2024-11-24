@@ -2,8 +2,8 @@
 
 # ChartInstruct:Instruction Tuning for Chart Comprehension and Reasoning
 
-- **link** : ()
-- **Github link** : ()
+- **link** : (https://arxiv.org/abs/2403.09028)
+- **Github link** : (https://github.com/vis-nlp/ChartInstruct)
 
 ## Abstract
 
