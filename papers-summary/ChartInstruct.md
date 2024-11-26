@@ -156,3 +156,39 @@ Here’s a simple example for each task shown in the image:
    A chart shows a company's revenue growing by 10% yearly from 2015 to 2020.  
    **Question:** What is the expected revenue in 2021 if the trend continues?  
    **Output:** If revenue grows by 10% again, it will be 1.1 times the 2020 value.
+
+## 2. Related Work
+
+#### **2.1 Chart Modeling**
+
+There are two main approaches to teaching AI to understand charts:
+
+1.  **Adapting general models** (language or vision-language models).
+    - These lack chart-specific training and perform poorly.
+2.  **Specialized chart models** (like UniChart or Deplot).
+    - These focus on narrow tasks (e.g., summarization or question answering) and are not versatile for real-world use.
+
+Some methods use pipelines that extract chart data and input it into advanced models (like GPT-4), but these often rely on proprietary or generic tools, which limits their effectiveness.
+
+---
+
+#### **2.2 Visual Instruction Tuning**
+
+Instruction tuning trains models to better align with human intent for diverse tasks. While this is common in general vision-language tasks, it’s rare in chart analysis.
+
+- Previous methods used tools like **CLIP**, which are built for natural images, not charts.
+- Training often relies on artificial or limited real-world charts, narrowing their abilities.  
+  This paper presents systems explicitly designed for diverse real-world chart scenarios.
+
+---
+
+#### **2.3 Chart-Related Tasks**
+
+Common chart tasks include:
+
+- **Chart Question Answering (CQA):** Answering questions about charts, often involving reasoning.
+- **Chart-to-Text:** Generating summaries from charts.
+- **Chart-to-Table:** Converting charts into data tables.
+- **Automated Fact-Checking (AFC):** Verifying claims against chart data.
+
+This paper evaluates its models on these tasks and introduces new chart reasoning tasks, using a broad and diverse dataset.
