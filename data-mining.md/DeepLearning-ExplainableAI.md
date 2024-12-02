@@ -113,3 +113,78 @@ Think of the system as a security guard:
   - **Section 3**: Explains the proposed framework.
   - **Section 4**: Shares the results of the study.
   - **Section 5**: Concludes the paper.
+
+### Related work
+
+![table 1](/image/DeepLearning-ExplainableAI1.PNG)
+
+- 1. **Approaches to Hate Speech Detection**
+
+  - Researchers use two main methods for hate speech detection:
+    - **Traditional Machine Learning**: Needs human-created features (like word counts). Examples: Bag of Words (BoW) and Term Frequency-Inverse Document Frequency (TF-IDF).
+    - **Deep Learning**: Finds patterns automatically without manual feature creation (e.g., word embeddings like Word2Vec, GloVe).
+
+- 2. **Traditional Techniques**
+
+  - **Davidson et al. (2017)**:
+    - Created a dataset of 2,408 tweets (hateful, offensive, and normal content).
+    - Used ML classifiers like Logistic Regression and Support Vector Machines.
+    - Achieved `82% accuracy` using TF-IDF features.
+  - **Basile et al. (2018)**:
+    - Focused on hate speech against women and immigrants (multi-lingual data).
+    - Classified text into "hate" or "non-hate" and "aggressive" or "non-aggressive."
+    - Best performance: `89% accuracy`.
+  - **Zhou et al. (2019)**:
+
+    - Added emotional features using a multi-task learning approach (Semantic Knowledge Sharing).
+    - Used attention mechanisms to highlight important parts of the text.
+    - Achieved `95.1% accuracy`.
+
+- 3. **Deep Learning Techniques**
+
+  - **Pelico et al.**:
+    - Fine-tuned `BERT (Bidirectional Encoder Representations from Transformers)`, achieving `81% accuracy`.
+    - However, BERT models are `computationally heavy` (large parameters).
+  - **Mozafari et al.**:
+    - Improved BERT by creating a weighted dataset to reduce errors.
+  - **Saleh et al.**:
+
+    - Used domain-specific word embeddings (`HSW2V`) and BiLSTM for classification.
+    - Combined hateful and offensive classes into one category.
+    - Achieved an `F1 score of 0.95`.
+
+- 4. **Advanced Architectures**
+
+  - **Fazil et al.**:
+    - Used three parallel CNNs with different filter sizes to extract features.
+    - Added BiLSTM layers for better text sequence learning.
+    - Used attention layers to give importance to critical words.
+    - Achieved binary classification but may not perform well on real-world data.
+  - **Ali et al.**:
+
+  - Combined graph algorithms and machine learning to detect hate and social groups.
+  - Used BiLSTM-GRU for six hate categories with `98.14% accuracy`.
+
+- 5. **Low-Resource Language Challenges**
+
+  - Detecting hate in `low-resource languages` (like Pushto) is harder because they lack sufficient written material.
+  - Example:
+
+    - **Awal et al.**: Developed `HateMAML`, a meta-learning model adaptable for multiple languages.
+    - Used multilingual encoders like `mBERT` and `XLM-R`.
+    - Achieved an average `F1 score of 0.738` across 8 low-resource languages.
+
+- 6. **Summary of Performance**
+
+  - Models combining `deep learning layers` (like BiLSTM) with modern word embeddings (e.g., GloVe, FastText) perform well.
+  - Example:
+    - **Mazari et al.**: Combined BiLSTM and Bi-GRU layers with `FastText` embeddings.
+    - Achieved a `ROC-AUC score of 98.63%`.
+  - However, many systems need improvements for real-time or diverse language use.
+
+- 7. **Challenges Identified**
+
+  - Many existing systems are:
+    - Computationally complex.
+    - Limited to high-resource languages (e.g., English).
+    - Unvalidated on real-time or diverse datasets.
