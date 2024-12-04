@@ -188,3 +188,76 @@ Think of the system as a security guard:
     - Computationally complex.
     - Limited to high-resource languages (e.g., English).
     - Unvalidated on real-time or diverse datasets.
+
+**4 Dec, 24**
+
+### Proposed Framework:
+
+- **1. Purpose of the Framework**
+
+- **Goal**: To detect hate speech and classify it into categories using a deep learning model.
+- **Workflow**:
+
+  - Preprocess text (remove unnecessary elements like URLs, special symbols, etc.).
+  - Use two models:
+    1.  **Hate Speech Detection (HSD)**: Identifies whether hate speech exists.
+    2.  **Hate Speech Classification (HSC)**: Categorizes the detected hate speech.
+
+- **2. Framework Overview**
+
+- **Embedding Layer**:
+
+  - Converts words into numerical vectors (called embeddings) that preserve word meaning and context.
+  - Reduces data size, making the model faster.
+  - Example: Similar words like "happy" and "joy" get similar vectors.
+
+- **Convolutional Layer**:
+
+  - Detects local patterns in the text, such as common word combinations.
+  - Uses a filter (size 5) to slide over the text and find important patterns.
+  - Example: It might detect phrases like “hate you” as significant.
+
+- **Max Pooling Layer**:
+
+  - Reduces the size of data while keeping the most important features.
+  - Example: Keeps the strongest signals from the convolutional layer.
+
+- **3. Recurrent Neural Network (RNN) Layers**
+
+- **Why RNNs?**:
+
+  - They process text sequentially, capturing the order and relationships between words.
+  - Example: In “I hate it,” RNNs understand the sequence matters (not just individual words).
+
+- **Bi-RNN (Bidirectional RNN)**:
+
+  - Looks at the text both forward and backward to capture full context.
+  - Example: In "I hate Mondays," it understands "Mondays" depends on "hate."
+  - Solves common RNN issues like losing long-term relationships between words.
+
+- **4. Bidirectional Long Short-Term Memory (Bi-LSTM)**
+
+- **Why LSTMs?**:
+  - Better than RNNs at remembering long-term patterns in text.
+  - Uses gates to decide which information to keep or forget.
+  - Example: Focuses on key phrases like "always bad" and ignores filler words.
+- **Bi-LSTM**:
+
+  - Processes text both forward and backward for even more context.
+
+- **5. Dropout Layer**
+
+- **Purpose**: Prevents overfitting (when a model becomes too good at training data but fails on new data).
+- Randomly ignores some connections in the network during training.
+
+- **6. Final Classification Layer**
+
+- **Softmax Activation**:
+
+  - Converts the model's output into probabilities for each category.
+  - Example: "Hate speech" might get a 90% probability, and "Non-hate" a 10% probability.
+
+- **Why This Architecture?**
+
+- Combines layers for both **local patterns** (convolutional) and **long-term relationships** (Bi-RNN, Bi-LSTM).
+- Makes the model efficient and accurate for detecting and classifying hate speech.

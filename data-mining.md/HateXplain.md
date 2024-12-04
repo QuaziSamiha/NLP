@@ -35,12 +35,6 @@
   - The dataset and code are **public** (free for researchers to use).
   - It helps researchers develop better and **fairer hate speech detection models**.
 
-- **Note**: The dataset contains offensive language because it’s necessary to study and solve this problem.
-
-No worries! Let me break down **bias** and **rationales** with easy explanations and examples:
-
----
-
 ##### **Bias (Unintended Unfairness)**
 
 - **What it means:** Bias happens when a model unfairly favors or targets certain groups or communities.
@@ -62,15 +56,13 @@ No worries! Let me break down **bias** and **rationales** with easy explanations
 - **Why it matters:**  
   Without rationales, it’s hard to trust a model. For instance, if the model labels the post but doesn’t show _which part_ of the post is hateful, we can’t verify or understand the decision.
 
-`We utilize existing state-of-the-art models and ob-serve that even models that perform very well in classificationdo not score high on explainability metrics like model plau-sibility and faithfulness. We also observe that models, whichutilize the human rationales for training, perform better in re-ducing unintended bias towards target communities.`
+`We utilize existing state-of-the-art models and ob-serve that even models that perform very well in classification do not score high on explainability metrics like model plausibility and faithfulness. We also observe that models, which utilize the human rationales for training, perform better in reducing unintended bias towards target communities.`
 
 **4 Dec, 24**
 
 ### Introduction
 
 ![fig 1](/image/hateXplain1.PNG)
-
-Sure! Here’s a simplified step-by-step summary of the introduction from the paper:
 
 - **1. The Problem**
 
