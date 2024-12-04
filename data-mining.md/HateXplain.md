@@ -220,3 +220,408 @@ Sure! Here’s a simplified step-by-step summary of the introduction from the pa
   4. **Annotation:** The process of labeling data (e.g., marking posts as hate, offensive, or normal).
   5. **Preprocessing:** Cleaning and preparing data for use in research or models.
   6. **Anonymization:** Removing personal information to protect privacy.
+
+##### Annotation Procedure
+
+![fig 4](/image/hateXplain4.PNG)
+
+- **1. Annotation Task on MTurk**
+
+  - **Who annotated the data?**
+
+    - The task was given to workers on Amazon Mechanical Turk (MTurk), a platform where people perform small online tasks for pay.
+
+  - **Three types of annotations for each post:**
+
+  1. **Category Label:**
+     - Classifies the text as _hate speech_ (targets a group), _offensive speech_ (hurtful but not hateful), or _normal_ (neutral or harmless).
+  2. **Target Group:**
+     - Identifies which group (e.g., race, gender, religion) is targeted if the post is hateful or offensive.
+  3. **Span Annotation:**
+     - Highlights specific words or phrases in the post that explain why the post was labeled hateful or offensive.
+
+- **2. Target Group Annotation**
+
+  - **Purpose:**
+
+    - To capture who is being targeted by the hateful or offensive content.
+    - Annotators choose from a predefined list of groups (e.g., racial groups, religious groups).
+
+  - **Why span annotations matter:**
+    - They give deeper insight into which parts of the text contribute to hate or offense.
+    - Helps researchers understand how hate or offensive speech is expressed in language.
+
+- **3. Annotation Instructions and Interface Design**
+
+  - **Preparing annotators for the task:**
+  - Annotators were **warned** that they might encounter hateful or offensive content.
+  - Detailed **instructions** were provided, including:
+    - Clear definitions of _hate speech_, _offensive speech_, and _normal_.
+    - Step-by-step examples showing how to label posts, choose target groups, and highlight spans.
+
+- **Ensuring high-quality data:**
+
+  - Annotators had to meet **strict qualifications**:
+    1. **Approval Rate:** Must have a 95% or higher approval rate on past tasks.
+    2. **Experience:** Must have completed at least 5,000 approved tasks on MTurk.
+
+- **Key Benefits of This Approach**
+
+  - Provides **detailed and reliable annotations**, ensuring the dataset is accurate and useful for training models.
+  - Using **span annotations** allows models to better explain their decisions, making them more interpretable.
+  - High-quality workers and clear guidelines minimize errors and improve the dataset’s value.
+
+- **Technical Keywords (with meanings):**
+
+1. **Annotation:** The process of labeling data for a specific purpose (e.g., marking posts as hateful or offensive).
+2. **MTurk:** Amazon Mechanical Turk, an online platform for crowdsourcing tasks.
+3. **Hate Speech:** Language that attacks or demeans a specific group.
+4. **Offensive Speech:** Hurtful language that isn’t necessarily hateful.
+5. **Span Annotation:** Highlighting parts of a text that explain why it is labeled a certain way.
+6. **HIT Approval Rate:** The percentage of successfully completed tasks by an MTurk worker.
+
+##### Dataset Creation Step
+
+![fig 6](/image/hateXplain6.PNG)
+
+- **1. Pilot Annotation**
+
+  - **Goal:**
+
+    - Test if annotators could accurately classify posts and identify target groups.
+
+  - **Process:**
+
+    - Each annotator worked on 20 posts.
+    - They were trained with examples and explanations to understand the labeling task.
+
+    - **Results:**
+
+      - Out of 621 annotators, **253 were selected** for the main task based on their performance.
+      - Feedback from the pilot was used to improve the process.
+
+- **2. Main Annotation Task**
+
+  - **Dataset Sources:**
+
+    - Posts were collected from **Twitter** and **Gab**, popular platforms for hate speech studies.
+
+  - **Annotation Process:**
+
+    - Each post was labeled by three annotators.
+    - Final label was decided using **majority voting** (if two out of three agreed).
+
+  - **Dataset Size:**
+
+    - **Twitter:** 9,055 posts.
+    - **Gab:** 11,093 posts.
+
+  - **Agreement Score:**
+
+    - Measured using **Krippendorff’s α** (a statistical measure of agreement between annotators): 0.46, which is higher than other hate speech datasets.
+
+- **3. Class Labels and Target Communities**
+
+  - **Class Labels:**
+    - Each post was categorized as:
+      - **Hateful** (attacks a group).
+      - **Offensive** (hurtful but not hateful).
+      - **Normal** (neutral or harmless).
+  - Posts with all three annotators disagreeing (919 cases) were excluded.
+
+  - **Target Communities:**
+
+    - Annotators selected target groups (e.g., **African, LGBTQ, Women**) from a predefined list.
+    - Only groups appearing in **100+ posts** were included.
+
+  - **Top Targets:**
+
+    - **Hate Speech:** African, Islam, Jewish.
+    - **Offensive Speech:** Women, Africans, LGBTQ.
+
+- **4. Rationale Annotation**
+
+  - **What Are Rationales?**
+
+    - Words or phrases highlighted by annotators to explain why a post is hateful or offensive.
+
+  - **Process:**
+
+    - Posts labeled as hateful or offensive were sent back to annotators for rationale annotation.
+    - On average, 5.48 words were highlighted per post for offensive speech and 5.47 for hate speech.
+
+  - **Frequent Rationales:**
+    - **Hate Speech:** Words like _nigger_, _kike_, and _moslems_.
+    - **Offensive Speech:** Words like _retarded_, _bitch_, and _white_.
+
+- **5. Ground Truth Attention**
+
+  - **What Is Attention?**
+
+    - A focus on certain words or parts of a text to explain a model’s decision.
+
+  - **How It’s Created:**
+    - Rationales from annotators are converted into **attention vectors** (lists marking important words as 1).
+    - These vectors are averaged and normalized using a **softmax function** (a mathematical way to convert numbers into probabilities).
+    - A **temperature parameter** is tuned to make important words stand out more.
+
+- **Special Case for Normal Posts:**
+
+  - Since normal posts have no rationales, all words are treated equally using a **uniform distribution**.
+
+- **Key Statistics and Observations**
+
+  - **Post Length:** Average length = 23.42 words per post.
+  - **Common Targets:** Groups like African and Women are frequently targeted, aligning with past studies.
+  - **Dataset Quality:** High-quality annotations ensure the dataset is reliable for studying hate speech and bias.
+
+- **Technical Keywords (with meanings):**
+
+1. **Pilot Annotation:** Initial small-scale testing to select qualified annotators.
+2. **Main Annotation:** The full labeling process for the dataset.
+3. **Majority Voting:** Final label is decided based on agreement by most annotators.
+4. **Krippendorff’s α:** A measure of agreement between annotators.
+5. **Rationale:** Highlighted text that explains why a label was assigned.
+6. **Attention Vector:** A mathematical representation of important words in a text.
+7. **Softmax Function:** Converts numbers into probabilities for better focus on key parts of a text.
+8. **Temperature Parameter:** Adjusts how strongly the model focuses on important words.
+9. **Uniform Distribution:** Treating all words equally when no rationale is available.
+
+##### Evaluation Metrics
+
+The research defines three key **types of evaluation metrics** for assessing hate speech detection models. Here's the simplified explanation:
+
+- 1. **Performance-Based Metrics**  
+     These metrics check how well the model classifies posts into the three classes: **Hateful, Offensive, or Normal**.
+- **Accuracy**: Measures the overall correctness of predictions.
+- **Macro F1-Score**: Focuses on balanced performance across all classes, even if they are imbalanced (e.g., fewer hateful posts).
+- **AUROC**: Shows how well the model separates the three classes (e.g., distinguishes hate speech from normal posts).
+
+- 2. **Bias-Based Metrics**  
+     These metrics identify if the model is unfairly biased against specific communities (like African, LGBTQ). Bias can lead to incorrect labeling of normal posts as toxic due to words associated with certain communities.
+
+**Key Metrics**:
+
+- **Subgroup AUC**: Measures how well the model separates toxic and normal posts within a specific community (e.g., posts about Asians).
+  - _Higher value_: The model is accurate for that community.
+- **BPSN (Background Positive, Subgroup Negative) AUC**: Measures if the model falsely flags normal posts about a community as toxic.
+  - _Higher value_: Fewer false positives for that community.
+- **BNSP (Background Negative, Subgroup Positive) AUC**: Measures if the model misses toxic posts about a community.
+  - _Higher value_: Fewer false negatives for that community.
+- **GMB (Generalized Mean of Bias) AUC**: Combines all the bias metrics (Subgroup, BPSN, BNSP) to give a single fairness score across all communities.
+
+- 3. **Explainability-Based Metrics**  
+     These metrics evaluate **how well the model explains its decisions** using rationales (key phrases in a post that justify the label).
+
+- Two Aspects of Explainability:
+
+1. **Plausibility**: How convincing the model’s explanations are to humans.
+
+   - **IOU F1-Score**: Checks overlap between model-highlighted rationales and human-highlighted rationales.
+   - **Token F1-Score**: Measures precision/recall for individual highlighted words.
+   - **AUPRC**: A precision-recall score for soft token selection (partial importance of words).
+
+2. **Faithfulness**: Whether the model’s explanations match its true reasoning.
+   - **Comprehensiveness**: Measures how much the prediction drops when the rationale is removed.
+     - _High comprehensiveness_: The rationale is very important to the prediction.
+   - **Sufficiency**: Checks if the rationale alone is enough to make the prediction.
+     - _High sufficiency_: The rationale captures all necessary information for the decision.
+
+---
+
+### Technical Keywords:
+
+1. **Accuracy**: How often predictions are correct.
+2. **F1-Score**: A measure that balances precision (correct predictions) and recall (finding all relevant cases).
+3. **AUROC**: A curve that evaluates the model’s separation ability.
+4. **Bias Metrics (Subgroup AUC, BPSN, BNSP, GMB)**: Ways to measure unintended model bias for specific groups.
+5. **Explainability**: How well the model's reasoning is understandable and faithful to its decisions.
+6. **Comprehensiveness**: Importance of highlighted rationales to the decision.
+7. **Sufficiency**: Whether the rationale alone is enough for the decision.
+
+### Models
+
+The research describes different models used to evaluate the dataset. Two versions of each model are considered:
+
+1. **Class Label Training**: Models are trained only on class labels (e.g., hate speech, offensive, normal).
+2. **Class Label + Attention Training**: Models are trained on class labels **and** the attention weights (importance of words in predictions). Some models, like CNN-GRU and BiRNN, cannot support attention training.
+
+##### Models Descriptions
+
+- 1. **CNN-GRU**
+
+- **Structure**: Combines Convolutional Neural Networks (CNN) and Gated Recurrent Units (GRU).
+  - CNN extracts patterns in word sequences using **filters** (like window sizes of 2, 3, 4 words).
+  - GRU processes sequences to capture word relationships in order.
+  - The output from GRU is **max-pooled** (chooses the strongest feature).
+- **Purpose**: Outputs predictions after processing word sequences.
+
+- 2. **BiRNN (Bidirectional Recurrent Neural Network)**
+
+- **Structure**: Processes input in both forward and backward directions for better understanding of word context.
+- **Layers**:
+
+  - Input word embeddings → Sequential RNN layers → Two fully connected layers → Final prediction.
+  - **Dropout** (randomly turning off parts of the model during training) is used to prevent overfitting.
+
+- 3. **BiRNN with Attention**
+
+- **Structure**: Same as BiRNN but includes an **attention layer**.
+
+  - Attention identifies the **most important words** in the text for making predictions.
+  - The model is trained by comparing the attention weights to **ground truth attention** (human-marked important words).
+
+- 4. **BERT (Bidirectional Encoder Representations from Transformers)**
+
+- **Pre-Trained Transformer Model**: Learns relationships between words and sentences.
+- **Structure**:
+  - Input sentence → Processes with 12 layers of attention mechanisms → CLS (special token representing the whole sentence) → Fully connected layer for predictions.
+- **Attention Supervision**: Matches the attention weights of the model with **ground truth attention** to make predictions that focus on the correct words.
+
+- Training and Hyperparameters
+
+1. **Data Splitting**:
+
+   - 80% for training, 10% for validation (tuning model settings), 10% for testing.
+   - The split maintains a **balanced distribution of classes** (stratified split).
+
+2. **Word Embeddings**:
+
+   - Non-BERT models use **GloVe embeddings** (pre-trained representations of words).
+   - Token length is set to 128 for faster processing.
+
+3. **Optimizers and Learning Rate**:
+
+   - **Adam Optimizer**: A method to improve training efficiency.
+   - Non-BERT models: Learning rate = **0.001**.
+   - BERT: Learning rate = **2e-5**.
+
+4. **Model-Specific Settings**:
+   - **Hidden Layer Size**:
+     - BiRNN-Attention: 64.
+     - BiRNN (no attention): 128.
+   - **Dropout Layers**: Added at various points to prevent overfitting.
+   - **λ (regularizer)**: Balances attention training loss and overall training loss.
+     - Best results: λ = 100 for BiRNN-Attention and BERT-Attention.
+
+---
+
+### Technical Keywords:
+
+1. **CNN-GRU**: Combines convolution for feature extraction and GRU for sequence modeling.
+2. **BiRNN**: Processes input text in forward and backward directions.
+3. **Attention**: Mechanism to focus on the most important parts of the input.
+4. **BERT**: Pre-trained transformer model for understanding word and sentence relationships.
+5. **Dropout**: Technique to prevent overfitting by turning off random parts of the model during training.
+6. **GloVe Embeddings**: Pre-trained word representations capturing word meanings.
+7. **Adam Optimizer**: Algorithm to improve training performance.
+8. **Learning Rate**: Speed at which the model learns during training.
+9. **λ (Regularizer)**: A factor controlling how much weight is given to attention training loss.
+
+### Result
+
+1. **Performance**: Models trained with human rationales (e.g., BiRNN-HateXplain, BERT-HateXplain) perform slightly better overall. BiRNN-HateXplain improves **plausibility** and **comprehensiveness**, while BERT-HateXplain improves **faithfulness** but slightly reduces **plausibility**.
+
+2. **Bias**: Human rationales help reduce bias effectively, especially when community terms are included. However, bias varies across communities (e.g., Asians have lower scores, Hispanics have more false positives). BERT-HateXplain handles bias better than others.
+
+3. **Explainability**:
+
+   - **Best Scores**:
+     - **Comprehensiveness**: BERT-HateXplain [LIME].
+     - **Plausibility**: BiRNN-HateXplain [Attn].
+     - **Sufficiency**: CNN-GRU.
+   - **LIME** explanations are generally more faithful than attention mechanisms.
+
+4. **Impact of λ (Regularizer)**: Increasing λ improves performance, plausibility, and sufficiency but reduces comprehensiveness.
+
+**Takeaway**: The dataset supports building models balancing **performance, bias reduction, and explainability**, depending on the task requirements.
+
+### Limitations of the Work
+
+1. **Lack of External Context**:  
+   The models do not use additional information like user profiles, gender, or post history, which could improve classification accuracy.
+
+2. **Language Restriction**:  
+   The work is limited to English and does not address hate speech in other languages, excluding multilingual contexts.
+
+**Key Takeaway**: The approach is effective but lacks external and multilingual factors critical for broader applicability.
+
+### Summary of Conclusion and Future Work:
+
+The paper introduces **HateXplain**, a benchmark dataset for detecting hate speech. It includes **20,000 posts** from **Gab and Twitter**, annotated with:
+
+1. **Labels**: Hate, Offensive, or Normal.
+2. **Target communities**: Groups mentioned in the text.
+3. **Rationales**: Specific text snippets marked by annotators to explain the label.
+
+**Key Observations**:
+
+- Models that perform well in classification might not provide **plausible** (human-convincing) or **faithful** (aligned with reasoning) explanations for their predictions.
+
+**Future Work**:
+
+- Integrating HateXplain with existing hate speech datasets (e.g., Davidson et al. 2017, Founta et al. 2018) to expand its utility and scope.
+
+This work highlights the importance of both **accurate detection** and **explainability** in hate speech models.
+
+#### what is `Ground Truth`?
+
+![fig 5](/image/hateXplain5.PNG)
+
+- **Ground Truth** refers to the actual, verified data or information used as a benchmark to evaluate models or systems in machine learning and research. It represents the most accurate and reliable answer or label for a given task, often created by human experts or reliable processes.
+
+**Examples in Context:**
+
+1. **Hate Speech Annotation:**
+   - If a post is labeled as _"Hateful"_ by multiple annotators and verified, this label is the **ground truth**. It's what the model will learn from and aim to replicate.
+2. **Image Classification:**
+
+   - In a dataset of dog and cat images, if a picture is verified as a "dog," this label becomes the **ground truth**.
+
+3. **Medical Diagnosis:**
+   - A diagnosis confirmed by multiple medical experts based on tests and evidence serves as the **ground truth** for training models in healthcare.
+     **Why Is Ground Truth Important?**
+
+- It acts as the **standard of correctness** to evaluate machine learning models during training and testing.
+- Models aim to replicate or match the ground truth to ensure accuracy.
+
+- **In Your Dataset Context:**
+  - **Ground Truth Attention**: In your hate speech study, "ground truth attention" is derived from **rationale annotations**, where annotators highlight specific words or phrases that justify a post being labeled as hateful or offensive.
+  - These rationales create a verified map (attention vector) of which parts of the text are critical for the model to focus on.
+
+This image illustrates the process of creating **Ground Truth Attention** for hate speech or offensive speech datasets. Here's a step-by-step explanation:
+
+### **Steps in the Image:**
+
+![fig 5](/image/hateXplain5.PNG)
+
+1. **Input: Annotations by Annotators**
+
+   - Three annotators (`Anno 1`, `Anno 2`, `Anno 3`) independently highlight words or phrases in the text that they believe justify the label (e.g., "Hate" or "Offensive"). These highlighted sections are called **attention spans**.
+
+2. **Label Categorization**
+
+   - The text is categorized into two cases:
+     - **Label is Normal**: The post is labeled as neutral or "normal."
+     - **Label is Offensive/Hate Speech**: The post is labeled as either "Hateful" or "Offensive."
+
+3. **Normal Label Processing**
+
+   - For "Normal" posts, there are no specific attention spans because the text does not contain offensive or hateful content.
+   - Instead, a **uniform attention** is assigned: all tokens (words) in the sentence get equal weight. This is calculated as `1 / sentence length`.
+
+4. **Offensive/Hate Speech Label Processing**
+
+   - For "Hate" or "Offensive" posts:
+     - The highlighted spans from all three annotators are combined, and their values are averaged to create a **combined attention vector**.
+     - **Softmax Function**: This vector is normalized using a **softmax function**, which converts the values into a probability-like distribution. The softmax ensures the attention focuses on the important (highlighted) tokens while de-emphasizing the others.
+
+5. **Final Output: Ground Truth Attention**
+   - The result is a **Ground Truth Attention vector**:
+     - For "Normal" posts, it is a uniform distribution across all tokens.
+     - For "Hate" or "Offensive" posts, it highlights the critical tokens (words) based on annotators’ rationale.
+
+**Purpose of Ground Truth Attention**
+
+- It guides machine learning models to focus on the important parts of the text (e.g., offensive terms like "nigger" or "bitch") when learning to classify the post.
+- It ensures that the attention mechanism in models is aligned with human reasoning.
