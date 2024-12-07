@@ -138,7 +138,7 @@ In short, Synthcity is like a helpful toolkit that simplifies using and comparin
 
 #### 2.1 Overview of the synthcity workflow
 
-![fig 1](/image/Synthcity1.PNG)
+![fig 1](/image/synthcity/fig1.PNG)
 
 - The Synthcity library simplifies the process of `creating` and `testing` synthetic data. It follows a `unified workflow`, meaning it works the same way for all data types (e.g., tables, time-series) and use cases (like privacy or augmentation). The workflow has `four main steps`:
 
