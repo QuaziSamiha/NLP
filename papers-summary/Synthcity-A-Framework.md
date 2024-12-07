@@ -193,6 +193,358 @@ In short, Synthcity is like a helpful toolkit that simplifies using and comparin
 
 **7 Dec, 24**
 
+#### 2.2 Evaluation for diverse use cases
+
+![table 1](/image/synthcity/table1.PNG)
+
+- Why Evaluate Synthetic Data?
+  Synthetic data has many uses, like:
+  - **Fairness**: Making sure models treat everyone equally.
+  - **Privacy**: Protecting sensitive information.
+  - **Data Augmentation**: Creating extra data to improve model training.
+
+To ensure synthetic data works well for these goals, Synthcity evaluates it using specific metrics (measurement tools). Here's how it works for a basic task:
+
+##### **2.2.1 Standard Data Generation**
+
+This is the simplest use case: creating synthetic data that looks as much like the real data as possible. Synthcity uses `fidelity metrics` to check this.
+
+- What is Fidelity?
+  Fidelity measures how closely synthetic data matches real data. It's like comparing a copy of a painting to the original—how similar are they?
+
+- How Synthcity Measures Fidelity:
+
+  1. **Distributional Metrics**: These compare patterns in real and synthetic data.
+
+  - **Jensen-Shannon Distance**: Measures how "far apart" the two data distributions are.
+  - **Wasserstein Distance**: A metric for comparing how features in the data are distributed.
+  - **Maximal Mean Discrepancy**: Tests if the synthetic data has the same overall "feel" as real data.
+
+  _Example_: If you create synthetic sales data, these metrics check whether the total sales per month match the real data's pattern.
+
+  2. **Detection Scores**: These test how easy it is to tell synthetic data apart from real data. If a classifier (a model that categorizes data) can easily separate them, the synthetic data might not be realistic enough.
+
+  _Example_: If fake patient data is clearly distinguishable from real patient data, the generator needs improvement.
+
+- Why Synthcity Does This:
+  By using these metrics, Synthcity ensures that the synthetic data is a faithful representation of the real data, making it reliable for tasks like training machine learning models or testing new algorithms.
+
+##### 2.2.2 Cross domain augmentation
+
+- What is Cross-Domain Augmentation?  
+  Sometimes, data comes from different sources or "domains" (like different countries or regions). One domain might have very little data (e.g., remote areas). **Cross-domain augmentation** involves creating extra synthetic data for the scarce domain by using knowledge from related domains.
+
+- How Synthcity Handles Cross-Domain Augmentation
+
+  1. **Goal**: To make up for data shortages in one domain by generating additional data using patterns learned from other domains.
+
+  - _Example_: If there’s little healthcare data from rural areas but a lot from cities, Synthcity uses city data to help generate rural healthcare data.
+
+  2. **How It Works**:
+
+  - The system learns which features are `domain-specific` (unique to one domain) and which are `domain-agnostic` (common across domains). This helps the generator transfer knowledge across domains efficiently.
+
+  3. **User-Friendly Interface**: With Synthcity, users can benchmark cross-domain augmentation tasks with just one command, saving time and effort.
+
+- Measuring Success with "Utility"
+
+  1. **Train-on-Synthetic, Evaluate-on-Real**:
+
+  - A `predictive model` is trained using synthetic data (including the augmented data for the scarce domain).
+  - The model is tested on real data from the scarce domain to see how well it performs.
+  - _Example_: Train a model on synthetic patient data (augmented rural data) and test it on real rural patient data to predict health outcomes.
+
+  2. **Predictive Models Supported**:
+
+  - Synthcity works with popular models like `XGBoost`, `neural networks`, and traditional models like `linear regression`.
+
+  3. **Baseline Comparison**:
+
+  - Synthcity also shows the performance of a model trained without any data augmentation. This helps users compare whether the synthetic data actually improves results.
+
+  4. **Automation and Error Prevention**:
+
+  - Synthcity has a built-in pipeline that automates the process, reducing programming errors and complexity.
+
+- Why Cross-Domain Augmentation is Important:
+
+  - Solves the problem of `data scarcity` in specific domains.
+  - Ensures predictive models perform better by filling in gaps in real-world data.
+  - Helps in tasks like improving healthcare predictions for underrepresented groups.
+
+##### 2.2.3 Synthetic data for ML fairness
+
+- What is Fairness in ML?  
+  When machine learning (ML) models work unfairly (e.g., predicting better for some groups but worse for others), it's often because the data they were trained on is biased or unbalanced. Synthcity helps address fairness by using `synthetic data` in two ways:
+
+- 1. **Balancing Distribution**
+
+  - **Problem**: Some groups (like minorities) might have less representation in the dataset. This can lead to biased ML models that don't perform well for these groups.
+
+    - _Example_: In a dataset for job applications, there might be fewer records of women applying for technical roles, leading to biased hiring predictions.
+
+  - **Solution**:
+    - Generate synthetic data specifically for the underrepresented group (e.g., women) to balance the dataset.
+    - This involves learning the conditional distribution **P(X|G)**, where **G** is the group label (e.g., gender, ethnicity).
+    - The goal is to add more realistic examples for the minority group to make the dataset more balanced.
+
+- 2. **Causal Fairness**
+
+  - **Problem**: Real-world datasets often reflect societal biases (e.g., unequal healthcare access). Training ML models on such data can perpetuate these biases.
+
+    - _Example_: A healthcare dataset might prioritize treatments for certain groups over others due to historical inequalities.
+
+  - **Solution**:
+    - Create synthetic data that removes these biases while still resembling the real data.
+    - This requires learning a **bias-free distribution** (**P̂(X)**) that stays close to the original data distribution (**P(X)**) for accuracy but removes unfair patterns.
+    - **Causality concepts** help identify and remove bias during data generation.
+    - _Example_: Generating healthcare data that ensures equal treatment prediction regardless of income or ethnicity.
+
+- Why is this Important?
+
+  - Ensures ML models are **fair** and work well for all groups, not just the majority.
+  - Synthetic data can help avoid discrimination in sensitive areas like hiring, healthcare, or credit scoring.
+  - Synthcity provides tools for both methods (balancing and causal fairness) to make fairness testing and improvements easier.
+
+##### 2.2.4 Synthetic data for privacy
+
+- Why Privacy is Important in Data?  
+  When creating synthetic data, it is crucial to protect sensitive information (e.g., names, addresses, medical records) to avoid privacy breaches. Synthcity addresses this using two main approaches:
+
+- 1. **Differential Privacy (DP)**
+
+  - **What is DP?**  
+    A mathematical method to ensure privacy by adding `noise` (small random changes) to data or the data creation process. This makes it hard to trace any specific individual's data in the dataset.
+
+  - **How does it work in synthetic data?**
+    - Noise can be added to training algorithms, like changing gradients (adjustments during training) or using a noisy GAN discriminator (part of the model that evaluates generated data).
+    - _Example_: A model generating patient data would add enough randomness so no one can figure out if a specific patient’s data is included, while still creating realistic health data.
+
+- 2. **Threat Model (TM)**
+
+  - **What is TM?**  
+    A method designed to protect against specific privacy risks, such as:
+
+    - **Membership inference**: Determining if someone’s data is part of the dataset.
+    - **Attribute inference**: Guessing sensitive details (e.g., salary).
+    - **Re-identification**: Identifying individuals in anonymized datasets.
+
+  - **How does TM work?**
+    - Uses techniques like regularization (fine-tuning the model to reduce overfitting) to lower the chances of privacy attacks.
+    - _Example_: Making sure that even if someone knows part of your information, they cannot accurately guess the rest.
+
+- Synthcity’s Privacy Tools
+
+  - **Privacy Metrics**:
+
+    - Synthcity uses standard privacy measures like:
+      - **k-anonymity**: Ensuring that at least `k people` share the same characteristics (e.g., age, job) so individuals can't be singled out.
+      - **l-diversity**: Making sure there’s enough diversity in sensitive attributes (e.g., health condition) to prevent guessing.
+
+  - **Privacy Attack Simulations**:
+    - Synthcity can simulate privacy attacks, such as `re-identification attempts`, to test if the synthetic data protects privacy.
+    - The result of these tests helps measure how well the synthetic data preserves privacy.
+
+- Why is this Important?
+
+  - Protects sensitive data in areas like healthcare, finance, and personal records.
+  - Ensures that synthetic data can be shared safely without risking individual privacy.
+  - Synthcity makes it easy to evaluate and improve privacy protection in synthetic data generation.
+
+##### 2.2.5 Evaluating off label use cases
+
+- What is an Off-Label Use Case?  
+  An `off-label use case` refers to using a generative model for purposes it wasn’t originally designed for. For example:
+
+  - Evaluating the `privacy` of synthetic data generated by a model that wasn’t specifically built for privacy.
+  - Checking the `fairness` of data created by a model designed for privacy (like one using Differential Privacy).
+
+- How Synthcity Helps with Off-Label Evaluation
+
+  1. **Flexible System Design**:
+
+  - **Separate Modules**: Synthcity separates its generative models (`PlugIns`) and evaluation metrics (`Metrics`) into different components.
+  - This means you can "mix and match" any model with any evaluation method.
+  - _Example_: You can use a fairness evaluation metric on a model that wasn’t created with fairness in mind.
+
+  2. **Consistent Interface**:
+
+  - Synthcity provides a uniform way to combine different models and metrics, making it easy to run complex benchmark studies with minimal effort.
+
+- Why is This Useful?
+
+  - Allows researchers to test models in unexpected or creative ways.
+  - Enables new research ideas, like exploring whether privacy-focused models are unintentionally fair or vice versa.
+  - Simplifies benchmarking, saving time and reducing errors.
+
+- Example for Better Understanding  
+  Imagine a researcher working with a synthetic dataset generated by a **basic generative model** (no privacy or fairness features). They can still use Synthcity to:
+  - Test how private this data is by simulating privacy attacks.
+  - Check if the dataset is fair across different groups, even if fairness wasn't the model's focus.
+
+#### 2.3 Baseline generative models
+
+![table 2](/image/synthcity/table2.PNG)
+
+- What Does Synthcity Do Here?  
+  Synthcity is a `benchmarking framework` that includes a large collection of pre-built generative models. These models allow users to easily compare different methods without worrying about the technical details of implementation.
+
+- Types of Generative Models in Synthcity
+
+  1. **Deep Generative Models**:
+
+  - These models are based on advanced machine learning techniques like `neural networks`.
+  - Major families supported:
+    - **GANs (Generative Adversarial Networks)**: Create data by making two models (generator and discriminator) compete with each other. Example: CTGAN (specialized for table-like data).
+    - **VAEs (Variational Autoencoders)**: Use probabilities to generate data while learning how the real data is structured. Example: TVAE.
+    - **Normalizing Flows (NF)**: Transform simple data distributions into more complex ones using mathematical functions. Example: FourierFlow for time-series data.
+    - **Diffusion Models (DDPM)**: Start with random noise and refine it into meaningful data. Example: TabDDPM (for table data).
+
+  2. **Non-Deep Generative Models**:
+
+  - These models don't rely on neural networks and include:
+    - **Bayesian Networks**: Models based on probabilities. Example: Predicting outcomes like weather or disease.
+    - **Adversarial Random Forests (ARF)**: A tree-based generative model that competes with itself to generate data.
+
+  3. **Data Modalities Supported**:
+
+  - **Static Data**: Example: Tables like Excel sheets (e.g., TVAE, ARF).
+  - **Time-Series Data**: Data over time, like stock prices (e.g., TimeGAN, FourierFlow).
+  - **Censored Data**: Data with incomplete records, like medical trials (e.g., Survival GAN).
+
+- How Synthcity Makes It Easy
+
+  - **Unified Interface**: All generative models are implemented through a `PlugIn system`. This means users can easily add or test new models using the same framework.
+  - **Comprehensive Tutorials**: Synthcity’s GitHub includes guides to help users add their own models step by step.
+
+- Why Is This Important?
+
+  - Provides a **one-stop solution** for testing and comparing synthetic data generators.
+  - Covers a **wide variety** of methods and data types, making it suitable for diverse applications.
+  - Saves time and effort for researchers by eliminating the need to reimplement existing methods.
+
+- Example for Better Understanding  
+  Imagine a researcher working with a dataset of heart patients. Synthcity lets them:
+
+  - Compare a GAN-based model like CTGAN with a Bayesian network to see which one generates more realistic synthetic patient records.
+  - Add their own generative model into Synthcity’s framework if it’s not already included.  
+    This flexibility makes Synthcity a powerful tool for researchers in synthetic data.
+
+#### 2.4 Architecture and hyper-parameters
+
+- Purpose  
+  Synthcity helps researchers `test and compare deep generative models` fairly by letting them:
+
+  1. Choose different `network architectures` (how the model is structured).
+  2. Adjust `hyper-parameters` (settings that control how the model learns).
+
+- Key Features
+
+  1. **Customizable Architectures**
+
+  - Researchers can pick from various pre-built architectures for different types of data.
+  - **Example**: For time-series data (e.g., stock prices or patient health trends), Synthcity supports 12 types of architectures, such as:
+    - **LSTM (Long Short-Term Memory)**: Useful for data with sequences (e.g., predicting future stock prices).
+    - **GRU (Gated Recurrent Unit)**: Like LSTM but simpler and faster.
+    - **Transformer**: A model good at understanding relationships in data, used in chatbots like GPT.
+    - **InceptionTime**: Specially designed for time-series data analysis.
+  - For other types of data (e.g., tables), Synthcity provides additional architectures listed in the Appendix of the paper.
+
+  2. **Flexible Hyper-parameters**
+
+  - **Hyper-parameters** are settings that fine-tune a model’s behavior, like:
+    - Learning rate: How fast the model learns.
+    - Batch size: How much data the model processes at once.
+  - **Synthcity Features for Hyper-parameters**:
+    - Allows listing, adjusting, and testing all relevant settings.
+    - Compatible with `hyper-parameter optimization libraries` like `Optuna`, which automates the process of finding the best settings.
+    - Lets users try multiple settings and choose the best-performing combination.
+
+  3. **Early Stopping Rules**
+
+  - **What it is**: A method to stop training a model early if it's not improving, to save time and resources.
+  - Synthcity lets users set and compare early stopping rules across models.
+
+  - Why This Is Useful
+
+    - Researchers can test **multiple setups** of the same model to understand what works best.
+    - Makes comparing different models fair and consistent by ensuring they are optimized properly before evaluation.
+    - Saves time by automating processes like hyper-parameter tuning and early stopping.
+
+- Example for Better Understanding
+
+  Imagine you’re testing two models to generate synthetic data:
+
+  - **Model A**: Uses LSTM architecture and a learning rate of 0.01.
+  - **Model B**: Uses Transformer architecture and a learning rate of 0.001.  
+    With Synthcity, you can:
+
+  1. Easily switch between architectures for testing.
+  2. Optimize the learning rate for both models using `Optuna`.
+  3. Set early stopping rules to avoid wasting time on training a model that isn't improving.  
+     This way, you can figure out which model and settings work best without needing separate tools for each step.
+
+#### 2.5 Data modalities
+
+![fig 2](/image/synthcity/fig2.PNG)
+
+- **What are Data Modalities?**
+
+**Data modalities** describe the types and structures of data that Synthcity can handle. It supports various tabular data types, which include combinations of **continuous** (e.g., age), **categorical** (e.g., gender), **integer** (e.g., count), and **censored** features (used in survival analysis like tracking patient recovery times).
+
+- 1. **Single Dataset**
+
+A **single dataset** is like a single table (e.g., a Pandas DataFrame) containing rows (data points) and columns (features).  
+ Synthcity organizes these by two axes:
+
+- a. **Observation Pattern**
+
+  This describes how data is collected over time:
+
+  - **Static data**: Data doesn't change over time (e.g., a snapshot of customer profiles).
+  - **Regular time series**: Data collected at consistent time intervals (e.g., daily stock prices).
+  - **Irregular time series**: Data collected at random intervals (e.g., medical test results on different dates).  
+    Synthcity supports all these types.
+
+- b. **Feature Type**
+
+  This defines the type of data in each column:
+
+  - **Continuous**: Values like height or temperature.
+  - **Categorical**: Fixed categories, like "yes" or "no."
+  - **Integer**: Whole numbers like counts.
+  - **Censored features**: Used in survival analysis, where each entry shows two values:
+
+    - \( x \): How long something lasts (e.g., survival time).
+    - \( c \): Whether the event was observed (1) or not (0).  
+      Example: In healthcare, \( x = 100 \) (days survived), \( c = 0 \) (patient still alive).
+
+- 2. **Composite Dataset**
+
+A **composite dataset** combines multiple datasets.  
+ Synthcity handles:
+
+- **Static datasets from different domains**: For example, customer data from different regions.
+- **Static and time-series datasets combined**:  
+  Example: A patient’s medical record might include:
+
+  - Static data: Age, gender, diagnosis.
+  - Time-series data: Blood pressure readings over months.
+
+- Future Enhancements  
+  Synthcity plans to support additional data types, like:
+
+  - Relational database-style data (data stored in interconnected tables).
+  - Richly annotated images (e.g., images with labels).
+  - Text data (e.g., articles or chat logs).
+
+- Why This Matters  
+  Synthcity makes it easy to work with various data types for tasks like generating synthetic data, testing models, and benchmarking, all within a consistent framework. Whether you have simple static data or complex combinations like time-series and static datasets, Synthcity supports it all.
+
+### Future Work
+
+- In future versions, we plan to include more data modalities including relational database-style data, richly annotated images, and texts
+
 ### 3 Comparison with existing libraries
 
 ![table 3](/image/synthcity/table3.PNG)
