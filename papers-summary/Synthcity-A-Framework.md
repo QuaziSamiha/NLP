@@ -54,6 +54,8 @@ In short, Synthcity is like a helpful toolkit that simplifies using and comparin
   - It doesn't combine data generators into one "super generator."
   - It doesn't just test the data generators—it helps you generate, evaluate, and use synthetic data for various tasks.
 
+**30 Nov, 24**
+
 ### 1. Introduction
 
 - **1. Why Good Data Matters**
