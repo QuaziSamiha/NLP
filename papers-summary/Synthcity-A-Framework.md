@@ -81,21 +81,21 @@ In short, Synthcity is like a helpful toolkit that simplifies using and comparin
 
 - **3. Current Challenges in Synthetic Data Research**
 
-  - The field is **`fragmented`** (split into many small parts) because:
+  - The field is `fragmented` (split into many small parts) because:
 
-    - There are many **`data types`** (like tables, time series, or images).
-    - Each type has specific **`use cases`** (e.g., making data fair, protecting privacy, or generating extra data to train models better (**`augmentation`**)).
+    - There are many `data types` (like tables, time series, or images).
+    - Each type has specific `use cases` (e.g., making data fair, protecting privacy, or generating extra data to train models better (`augmentation`)).
     - Researchers have focused on creating specialized models for narrow problems, but this causes four big issues:
 
       - **Challenge 1: Evaluating Models for Specific Needs**
 
-        - Most tests only check how well synthetic data looks like real data (**`fidelity`**) but ignore other needs. - For example, does the synthetic data: - Work well with AI models (**`utility`**)? - Protect privacy?
+        - Most tests only check how well synthetic data looks like real data (`fidelity`) but ignore other needs. - For example, does the synthetic data: - Work well with AI models (`utility`)? - Protect privacy?
 
       - New methods are needed to measure these things.
 
       - **Challenge 2: Using Models for Unintended Purposes**
 
-        - Models are often designed for one job, like creating private data. But in real life, they’re used for many tasks, like **`privacy and augmentation together`**.
+        - Models are often designed for one job, like creating private data. But in real life, they’re used for many tasks, like `privacy and augmentation together`.
         - This can cause problems because the model wasn’t built for all these uses.
 
       - **Challenge 3: Comparing Many Models**
@@ -114,12 +114,12 @@ In short, Synthcity is like a helpful toolkit that simplifies using and comparin
 
 - **4. How Synthcity Solves These Problems**
 
-  **`Synthcity`** is a Python library designed to make working with synthetic data easier.
+  `Synthcity` is a Python library designed to make working with synthetic data easier.
 
   - **Key Features**:
 
     - Works with different data types and use cases.
-    - Offers tools to test synthetic data for **`fidelity`**, **`privacy`**, and **`utility`**.
+    - Offers tools to test synthetic data for `fidelity`, `privacy`, and `utility`.
     - Lets researchers compare models consistently, saving time and effort.
     - Has an easy interface for creating and testing tabular data (like spreadsheets).
 
@@ -147,18 +147,18 @@ In short, Synthcity is like a helpful toolkit that simplifies using and comparin
     - **What happens?**  
       The real dataset is loaded using a tool called the `DataLoader`.
     - **Key Features**:
-    - Works with different types of data, like spreadsheets (`tabular data`) or sequences over time (`time series`).
-    - Lets users label important parts, like marking private data for privacy tools.
-    - **Example**: Imagine loading patient records for healthcare research. You can specify that the "age" column is sensitive and should be handled carefully.
+      - Works with different types of data, like spreadsheets (`tabular data`) or sequences over time (`time series`).
+      - Lets users label important parts, like marking private data for privacy tools.
+      - **Example**: Imagine loading patient records for healthcare research. You can specify that the "age" column is sensitive and should be handled carefully.
 
   - **Step 2: Training the Generator**
 
     - **What happens?**  
       A synthetic data generator is chosen and trained using a tool called the `Plugin`.
     - **How it works**:
-    - The generator learns the patterns in the real data (like relationships between columns).
-    - The `fit() method` trains the generator on the training part of the real data.
-    - **Example**: A generator could learn how customers' spending patterns relate to their income.
+      - The generator learns the patterns in the real data (like relationships between columns).
+      - The `fit() method` trains the generator on the training part of the real data.
+      - **Example**: A generator could learn how customers' spending patterns relate to their income.
 
   - **Step 3: Generating Synthetic Data**
 
@@ -172,10 +172,10 @@ In short, Synthcity is like a helpful toolkit that simplifies using and comparin
     - **What happens?**  
       The synthetic data is tested to see how good it is using the **Metrics** tool.
     - **Key Points to Check**:
-    - **Fidelity**: Does it look like the real data?
-    - **Privacy**: Does it protect sensitive information?
-    - **Utility**: Can it be used to train AI as effectively as real data?
-    - **Example**: If synthetic customer data is used to train a sales prediction model, does the model perform as well as it would with real data?
+      - **Fidelity**: Does it look like the real data?
+      - **Privacy**: Does it protect sensitive information?
+      - **Utility**: Can it be used to train AI as effectively as real data?
+      - **Example**: If synthetic customer data is used to train a sales prediction model, does the model perform as well as it would with real data?
 
   - **Bonus: One-Step Benchmarking**
 
