@@ -68,56 +68,56 @@ In short, Synthcity is like a helpful toolkit that simplifies using and comparin
 - **2. How Synthetic Data Helps**
 
   - **Synthetic data** is fake but realistic data created by computers.
+
     - It’s useful when real data is too small, private, or unfair. For example:
-    - In healthcare, synthetic data can safely mimic patient data without exposing real patients’ details.
+      - In healthcare, synthetic data can safely mimic patient data without exposing real patients’ details.
+
   - To create useful synthetic data, we need models that:
 
-  - Match the patterns of the real data (**capture the data distribution**).
+    - Match the patterns of the real data (**capture the data distribution**).
     - Meet specific needs, like privacy or fairness (**desired use cases**).
 
 - **3. Current Challenges in Synthetic Data Research**
 
-The field is **fragmented** (split into many small parts) because:
+  - The field is **`fragmented`** (split into many small parts) because:
 
-- There are many **data types** (like tables, time series, or images).
-- Each type has specific **use cases** (e.g., making data fair, protecting privacy, or generating extra data to train models better (**augmentation**)).
-- Researchers have focused on creating specialized models for narrow problems, but this causes four big issues:
+    - There are many **`data types`** (like tables, time series, or images).
+    - Each type has specific **`use cases`** (e.g., making data fair, protecting privacy, or generating extra data to train models better (**`augmentation`**)).
+    - Researchers have focused on creating specialized models for narrow problems, but this causes four big issues:
 
-- **Challenge 1: Evaluating Models for Specific Needs**
+      - **Challenge 1: Evaluating Models for Specific Needs**
 
-  - Most tests only check how well synthetic data looks like real data (**fidelity**) but ignore other needs.
-  - For example, does the synthetic data:
-    - Work well with AI models (**utility**)?
-    - Protect privacy?
-  - New methods are needed to measure these things.
+        - Most tests only check how well synthetic data looks like real data (**`fidelity`**) but ignore other needs. - For example, does the synthetic data: - Work well with AI models (**`utility`**)? - Protect privacy?
 
-- **Challenge 2: Using Models for Unintended Purposes**
+      - New methods are needed to measure these things.
 
-  - Models are often designed for one job, like creating private data. But in real life, they’re used for many tasks, like **privacy and augmentation together**.
-  - This can cause problems because the model wasn’t built for all these uses.
+      - **Challenge 2: Using Models for Unintended Purposes**
 
-- **Challenge 3: Comparing Many Models**
+        - Models are often designed for one job, like creating private data. But in real life, they’re used for many tasks, like **`privacy and augmentation together`**.
+        - This can cause problems because the model wasn’t built for all these uses.
 
-  - There are lots of synthetic data models, but they don’t work together easily:
-    - Different input formats or software make testing hard.
-  - Researchers waste time fixing these problems instead of focusing on the actual study.
+      - **Challenge 3: Comparing Many Models**
 
-- **Challenge 4: Understanding Why a Model Works**
+        - There are lots of synthetic data models, but they don’t work together easily:
+          - Different input formats or software make testing hard.
+        - Researchers waste time fixing these problems instead of focusing on the actual study.
 
-  - Synthetic data models are complex, with many parts like:
-    - **Architecture** (the way the model is built).
-    - **Objective function** (the goal the model tries to achieve).
-    - **Hyperparameters** (settings that affect how the model works).
-  - It’s hard to tell which part of the model improves performance, making research less clear.
+      - **Challenge 4: Understanding Why a Model Works**
+
+        - Synthetic data models are complex, with many parts like:
+          - **Architecture** (the way the model is built).
+          - **Objective function** (the goal the model tries to achieve).
+          - **Hyperparameters** (settings that affect how the model works).
+        - It’s hard to tell which part of the model improves performance, making research less clear.
 
 - **4. How Synthcity Solves These Problems**
 
-  **Synthcity** is a Python library designed to make working with synthetic data easier.
+  **`Synthcity`** is a Python library designed to make working with synthetic data easier.
 
   - **Key Features**:
 
     - Works with different data types and use cases.
-    - Offers tools to test synthetic data for **fidelity**, **privacy**, and **utility**.
+    - Offers tools to test synthetic data for **`fidelity`**, **`privacy`**, and **`utility`**.
     - Lets researchers compare models consistently, saving time and effort.
     - Has an easy interface for creating and testing tabular data (like spreadsheets).
 
