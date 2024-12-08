@@ -255,3 +255,55 @@ follows:
 
 - We collect instruction-following data with base chart types (i.e. bars, lines, dot-lines, and pies)
 - 5 chart-rated tasks, including chart-to-table translation, chart numerical QA, chart referring QA, chart open-ended QA, and chart summarization
+
+**7 Dec, 24**
+
+### 3. ChartSFT
+
+**What is ChartSFT?**  
+ChartSFT is a **large-scale dataset** designed for teaching AI systems to understand and interact with different types of charts. It is much bigger than similar datasets, with **39 million chart-text examples**, making it:
+
+- **4.75 times bigger** than MatCha.
+- **5.62 times bigger** than UniChart.
+
+1. **Types of Charts**
+
+ChartSFT covers **nine types of charts**, including both **basic** and **specialized** chart types.
+
+**Basic Chart Types**
+
+These include common charts like:
+
+- **Bar chart**: Shows comparisons (e.g., sales in different years).
+- **Line chart**: Shows trends (e.g., stock prices over time).
+- **Dot-line chart**: Combines lines and dots for emphasis.
+- **Pie chart**: Shows proportions (e.g., market share).
+
+Most of these are collected from existing datasets.
+
+**Specialized Chart Types**
+
+For unique or complex charts, table data was generated using:
+
+- **AI tools like ChatGPT**: It suggests the best chart type for given table data (e.g., turning a dataset into a suitable chart).
+- **Data augmentation techniques**: Modifying parameters or creating new charts to diversify the dataset.
+
+2. **Data Sources**
+
+The dataset is built by combining charts from various sources:
+
+- **Existing datasets**: Well-known datasets already containing chart data.
+- **Tables from arXiv research papers**: Tables are turned into charts using techniques like ChatGPT's suggestions.
+- **Synthetic data**: New table data is generated to create charts that weren’t available in the original datasets.
+
+Why It’s Important
+
+ChartSFT is a massive and diverse resource for improving AI's ability to:
+
+- Understand different chart types.
+- Generate accurate text descriptions of charts.
+- Learn from both common and specialized charts.
+
+Its scale and diversity make it a powerful tool for chart-specific AI training.
+
+![table 1](/image/chartAssistant/table1.PNG)

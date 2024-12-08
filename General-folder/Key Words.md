@@ -8,3 +8,8 @@
 
 - A `use case` refers to a specific situation or scenario in which a product, system,
   or process is used to achieve a particular goal.
+
+- precision, recall, f1 score and accuracy
+- state of art approaches
+
+- training, testing, and validation sets
