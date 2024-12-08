@@ -25,3 +25,12 @@
 - ICMLA
 - CVPR
 - ACL
+
+### Mulberry Domain
+
+- can be done `Classification` (can combine multiple data set)
+- can be done `Detection` and `Segmentation` --> need annotation
+
+- lacking:
+  - diseases can be seasonal but leaves are collected during 6 months only, so other season diseases can be missed
+  - this is a classification task, there are 3 classes, and the model only one class at a time, but a leaf can attacked by multiple diseases. so multiclass classification can be done.

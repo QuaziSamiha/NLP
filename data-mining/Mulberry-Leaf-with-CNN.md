@@ -187,66 +187,56 @@ By creating more diverse and balanced images, the training dataset became large,
 
 ### C. Modified Pre-trained Model
 
-Here’s a simple, step-by-step summary of the **Modified Pretrained Model Architecture** section:
+![fig 4](/image/Mulberry-Leaf-with-CNN/fig4.PNG)
 
----
-
-### **Objective**:
+- **Objective**:
 
 The study used existing models (**MobileNetV3Small**, **VGG19**, and **ResNet50**) to classify mulberry leaf diseases. It enhanced these models by adding layers to make them more accurate and suitable for the task.
 
----
+**1. Base Models**:
 
-### **1. Base Models**:
+The study used `pre-trained models` (models already trained on large datasets) as starting points. Here's why these models were chosen:
 
-The study used **pretrained models** (models already trained on large datasets) as starting points. Here's why these models were chosen:
-
-- **MobileNetV3Small**:
+- `MobileNetV3Small`:
 
   - Lightweight, fast, and ideal for mobile/embedded devices.
-  - Uses **depth-wise separable convolutions** (special layers that process images efficiently).
+  - Uses `depth-wise separable convolutions` (special layers that process images efficiently).
   - Example: It’s like using a smaller yet highly efficient car for city roads instead of a bulky truck.
 
-- **VGG19**:
+- `VGG19`:
 
   - A deep model with 19 layers, known for its simplicity.
-  - Processes images step-by-step through **convolution** (extracts patterns from images).
+  - Processes images step-by-step through `convolution` (extracts patterns from images).
 
-- **ResNet50**:
-  - Uses **residual connections** (shortcuts that help avoid problems when training very deep models).
+- `ResNet50`:
+  - Uses `residual connections` (shortcuts that help avoid problems when training very deep models).
   - Example: If solving a tough puzzle, this model uses shortcuts to remember earlier steps.
 
----
-
-### **2. Added Convolutional Layers**:
+**2. Added Convolutional Layers**:
 
 Extra layers were added to improve feature detection for specific tasks.
 
-- **Why Add Layers?**:
+- `Why Add Layers?`:
 
   - Original models are generic. The new layers help capture details specific to mulberry leaves.
   - Example: A general camera can take pictures of anything, but adding a special lens helps focus on specific objects.
 
-- **Details of Added Layers**:
-  - **Four convolutional layers** with decreasing channels (512 → 128 → 64 → 32).
+- `Details of Added Layers`:
+  - `Four convolutional layers` with decreasing channels (512 → 128 → 64 → 32).
   - Each layer uses:
-    - **ReLU activation** (helps the model learn non-linear patterns).
-    - **Batch Normalization** (improves speed and stability).
-    - **Dropout** (prevents overfitting by randomly ignoring parts of the model during training).
+    - `ReLU activation` (helps the model learn non-linear patterns).
+    - `Batch Normalization` (improves speed and stability).
+    - `Dropout` (prevents overfitting by randomly ignoring parts of the model during training).
 
----
-
-### **3. Fully Connected Layers**:
+**3. Fully Connected Layers**:
 
 After the convolutional layers:
 
 - The features (patterns learned from the images) are flattened into a vector.
-- This vector is passed through **fully connected layers**, which map features to the final classes (healthy, rust, or spot).
-- A **Dropout layer** is added to ensure the model generalizes well.
+- This vector is passed through `fully connected layers`, which map features to the final classes (healthy, rust, or spot).
+- A `Dropout layer` is added to ensure the model generalizes well.
 
----
-
-### **4. Forward Propagation**:
+**4. Forward Propagation**:
 
 - The input (image) passes through:
   - Base MobileNetV3Small model.
@@ -254,22 +244,71 @@ After the convolutional layers:
   - Fully connected layers.
 - The result: Class probabilities (e.g., how likely an image is healthy or diseased).
 
----
+**5. Training**:
 
-### **5. Training**:
-
-- **Loss Function**: Measures how far the model’s predictions are from the actual labels. Used **Cross-Entropy Loss** (common for classification).
-- **Optimizer**: Used **ADAM** (adjusts the model weights efficiently during training).
+- `Loss Function`: Measures how far the model’s predictions are from the actual labels. Used `Cross-Entropy Loss` (common for classification).
+- `Optimizer`: Used `ADAM` (adjusts the model weights efficiently during training).
 - Goal: Combine MobileNetV3Small’s lightweight design with the added layers’ power for better disease classification.
 
----
+**9 Dec, 24**
 
-### Key Takeaways:
+### D. Software Application Development
 
-- **MobileNetV3Small** is a compact and efficient base, especially for mobile apps.
-- Adding layers allows the model to learn more specific patterns for leaf diseases.
-- The training process balances accuracy and speed, ensuring the model works well even with limited computing power.
+1. android studio
+2. tensorflow lite
 
----
+### E. Gradient-Weighted class activation mapping (Grad-CAM)
 
-This section focuses on modifying existing models to make them more suitable for the specific task of classifying mulberry leaf diseases.
+## Experimental Result
+
+- A. performance metrics
+- B. Multiclass classification result
+  - 1.  model performance
+  - 2.  ablation study
+- C. Android application
+- D. Grad-CAM model visualization
+
+## Discussion and Future Work
+
+1. **AI in Agriculture**:
+
+   - The research shows how AI can solve real problems in agriculture, like identifying diseases in mulberry trees.
+   - This is important for the silk industry, as diseases in mulberry leaves affect silk production.
+
+2. **Model Development**:
+
+   - A **lightweight model** (small, efficient, and fast) was created using **MobileNetV3Small**.
+   - It performs well in detecting and classifying mulberry leaf diseases.
+
+3. **Explainable AI (XAI)**:
+
+   - Used **Grad-CAM** (a method to visualize which parts of an image the model focuses on) to make the model more transparent and understandable.
+   - Example: If the model detects a disease, Grad-CAM shows which part of the leaf led to this decision.
+
+4. **Dataset Strength**:
+   - The dataset included healthy leaves and leaves with two common diseases (leaf rust and leaf spot).
+   - This variety helped train a strong and accurate model.
+
+- **Future Directions**:
+
+1. **Drones for Data Collection**:
+
+   - Drones with cameras can capture images of crops from above.
+   - Benefits:
+     - Cover large fields quickly.
+     - Identify diseases early.
+     - Monitor plant health continuously.
+   - Example: A drone flying over a mulberry garden can detect diseased areas in real-time.
+
+2. **Static Cameras**:
+
+   - Fixed cameras can monitor plants closely over time.
+   - Benefits:
+     - Detailed examination of plant health.
+     - Help track disease progress.
+
+3. **Better Decision-Making**:
+   - Early disease detection and regular monitoring can guide farmers to take action at the right time.
+   - This ensures:
+     - Efficient use of resources (like pesticides or fertilizers).
+     - Improved silk production and sustainability.
